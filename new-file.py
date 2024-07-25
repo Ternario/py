@@ -90,7 +90,8 @@ class Employee:
         return self.age > 18
 
 
-list_of_person = [Person(i, y) for i, y in persons]
+list_of_person = [Person(*person) for person in persons]
+
 
 list_of_employee = filter(lambda x: x.is_adult(), [Employee(i.name, i.calk_age()) for i in list_of_person])
 
