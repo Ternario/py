@@ -1,7 +1,6 @@
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
-
 # --------------------------------------task 1---------------------------------------------
 
 cars = [
@@ -32,7 +31,8 @@ class Car:
 
 
 my_objects = [Car(*car) for car in cars]
-
+for i in my_objects:
+    print(i)
 
 filter_object = filter(lambda x: x.color == "Black", my_objects)
 
@@ -52,16 +52,29 @@ persons = [
 ]
 
 
-def is_valid_age(birthdate: str):
-    year, month, day = map(int, birthdate.split('-'))
-    date_of_birth = datetime(year, month, day)
-    now = datetime.now()
-    age = relativedelta(now, date_of_birth).years
-    return age
-
-
 class Person:
     def __init__(self, name, birthday):
+        self.age = None
+        self.name = name
+        self.birthday = birthday
+        self.calk_age()
+
+    def __str__(self):
+        return f"{self.name}, {self.birthday}"
+
+    def __repr__(self):
+        return f"{self.name}, {self.birthday}"
+
+    def calk_age(self):
+        year, month, day = map(int, self.birthday.split('-'))
+        date_of_birth = datetime(year, month, day)
+        now = datetime.now()
+        self.age = relativedelta(now, date_of_birth).years
+
+
+class Employee(Person):
+    def __init__(self, name, birthday):
+        super().__init__(name, birthday)
         self.name = name
         self.birthday = birthday
 
@@ -71,28 +84,15 @@ class Person:
     def __repr__(self):
         return f"{self.name}, {self.birthday}"
 
-    def calk_age(self):
-        return is_valid_age(self.birthday)
-
-
-class Employee:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-    def __str__(self):
-        return f"{self.name}, {self.age}"
-
-    def __repr__(self):
-        return f"{self.name}, {self.age}"
-
     def is_adult(self):
         return self.age > 18
 
 
 list_of_person = [Person(*person) for person in persons]
 
+list_of_employee = filter(lambda x: x.is_adult(), [Employee(*person) for person in persons])
 
-list_of_employee = filter(lambda x: x.is_adult(), [Employee(i.name, i.calk_age()) for i in list_of_person])
+for i in list_of_employee:
+    print(i)
 
 print(all(i.age > 18 for i in list_of_employee))
