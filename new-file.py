@@ -31,7 +31,8 @@ class Car:
         return f"{self.model}, {self.year}, {self.color}"
 
 
-my_objects = [Car(i, y, z) for i, y, z in cars]
+my_objects = [Car(*car) for car in cars]
+
 
 filter_object = filter(lambda x: x.color == "Black", my_objects)
 
