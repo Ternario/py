@@ -31,8 +31,8 @@ class Car:
 
 
 my_objects = [Car(*car) for car in cars]
-for i in my_objects:
-    print(i)
+# for i in my_objects:
+#     print(i)
 
 filter_object = filter(lambda x: x.color == "Black", my_objects)
 
@@ -57,7 +57,7 @@ class Person:
         self.age = None
         self.name = name
         self.birthday = birthday
-        self.calk_age()
+        self._calk_age()
 
     def __str__(self):
         return f"{self.name}, {self.birthday}"
@@ -65,7 +65,7 @@ class Person:
     def __repr__(self):
         return f"{self.name}, {self.birthday}"
 
-    def calk_age(self):
+    def _calk_age(self):
         year, month, day = map(int, self.birthday.split('-'))
         date_of_birth = datetime(year, month, day)
         now = datetime.now()
@@ -90,7 +90,7 @@ class Employee(Person):
 
 list_of_person = [Person(*person) for person in persons]
 
-list_of_employee = filter(lambda x: x.is_adult(), [Employee(*person) for person in persons])
+list_of_employee = filter(lambda x: x.is_adult(), [Employee(i.name, i.birthday) for i in list_of_person])
 
 for i in list_of_employee:
     print(i)
